@@ -61,6 +61,13 @@ def extract_email(email):
         except IndexError:
             return None
 
+def extract_roll(roll):
+    roll = re.findall("([0-9][a-zA-Z][0-9][0-9][/][a-zA-Z][a-zA-Z][/][0-9][0-9][0-9])",roll)
+    if roll:
+        return roll[0]
+    else:
+        return None
+
 
 def fun(pp):
     resume_path = pp
@@ -73,10 +80,11 @@ def fun(pp):
     for i in text:
         if i is not '':
             resume_text.append(i)
-    details["name"] = resume_text[0] + ' ' + resume_text[1]
-    details["email"] = extract_email(text_file)
-    details["mobile"] = extract_mobile_number(text_file)
+    details["Name"] = resume_text[0] + ' ' + resume_text[1]
+    details["RollNo"] = extract_roll(text_file)
+    details["Email"] = extract_email(text_file)
+    details["Mobile"] = extract_mobile_number(text_file)
     # print(details)
     return details
 
-fun("C:/Users/piyush/Desktop/resume-parser/sampleResumes/piyush.pdf")
+# fun("C:/Users/piyush/Desktop/resume-parser/sampleResumes/piyush.pdf")
