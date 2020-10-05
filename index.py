@@ -1,11 +1,14 @@
 import os
 import resumeParse
+import utils
+
+upload_path = utils.piyush
 
 
 resumes = []
 
 for resume in os.listdir("./sampleResumes"):
-    resumes.append("D:/SYSTEM DATA/Desktop/Resume-Parser/sampleResumes/" + resume)
+    resumes.append(upload_path + '/' + resume)
 
 
 for i in resumes:
