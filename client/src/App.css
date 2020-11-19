@@ -1,0 +1,85 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+.profile-sexy {
+  margin-top: 83px;
+  color: blueviolet;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  background-color: rgb(237, 235, 235);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.container {
+  margin: 65px auto 0 auto;
+  /* max-width: 1200px; */
+}
+
+.homecontainer {
+  margin: 65px auto 0 auto;
+  max-width: 1500px;
+}
+.nav-container {
+  margin: auto;
+}
+div.image {
+  background-image: url(https://images.pexels.com/photos/936023/pexels-photo-936023.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
+  max-width: 100%;
+  height: auto;
+  text-align: justify;
+  padding-left: 3%;
+  color: darkcyan;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-style: italic;
+  font-weight: bold;
+  padding-top: 15%;
+  padding-bottom: 15%;
+  font-size: larger;
+  opacity: 0.8;
+}
+
+.top-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
