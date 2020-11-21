@@ -1,0 +1,275 @@
+import React, { Component } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+// import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+
+import { withFirebase } from "./Firebase";
+import { withRouter } from "react-router-dom";
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
+
+const useStyles = {
+  paper: {
+    marginTop: "8px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: "4px",
+    backgroundColor: "#009688",
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: "16px",
+  },
+  submit: {
+    margin: "16px 0px 8px",
+  },
+  upload: {
+    margin: "20px 0px 12px",
+  },
+};
+
+const INITIAL_STATE = {
+  email: "",
+  password: "",
+  firstName: "",
+  lastName: "",
+  country: "",
+  mobile: "",
+  DOB: "",
+  error: null,
+};
+
+class CandidateDetails extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { ...INITIAL_STATE };
+    var uploadFile = null;
+  }
+  onUpload = (event) => {
+    event.preventDefault();
+      console.log("HELOO");
+      console.log(this.uploadFile);
+  };
+
+  imageChange = (event) => {
+    const imageFile = event.target.files[0];
+    this.uploadFile = imageFile;
+    console.log(this.uploadFile);
+  };
+//   onSubmit = (event) => {
+//     const {
+//       firstName,
+//       lastName,
+//       email,
+//       password,
+//       mobile,
+//       DOB,
+//       country,
+//     } = this.state;
+
+//     this.props.firebase
+//       .doCreateUserWithEmailAndPassword(email, password)
+//       .then((authUser) => {
+//         console.log(authUser.user.uid);
+//         const newUser = {
+//           email: this.state.email,
+//           firstName: this.state.firstName,
+//           lastName: this.state.lastName,
+//           mobile: this.state.mobile,
+//           DOB: this.state.DOB,
+//           country: this.state.country,
+//           image:
+//             "https://firebasestorage.googleapis.com/v0/b/dressify-59ab5.appspot.com/o/no-img.png?alt=media&token=e9f35f49-0354-49f6-bb26-7538a523b3a3",
+//         };
+//         return this.props.firebase.db
+//           .doc(`/users/${authUser.user.uid}`)
+//           .set(newUser);
+//       })
+//       .then(() => {
+//         this.setState({ ...INITIAL_STATE });
+//         this.props.history.push("/profile");
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//         this.setState({ error });
+//       });
+
+//     event.preventDefault();
+//   };
+
+  onChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            {/* <LockOutlinedIcon /> */}
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            HOME
+          </Typography>
+          <Grid item xs={12}>
+                <form onSubmit={this.onUpload} className={classes.form}>
+                <input type="file" onChange={this.imageChange} className={classes.box}></input>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.upload}
+                >
+                    Upload
+                </Button>
+                </form>
+          </Grid>
+          <form className={classes.form} noValidate onSubmit={this.onSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  onChange={this.onChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="lname"
+                  onChange={this.onChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  onChange={this.onChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={this.onChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="mobile"
+                  label="Mobile Number"
+                  name="mobile"
+                  autoComplete="mobile"
+                  onChange={this.onChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="DOB"
+                  label="Date Of Birth"
+                  name="DOB"
+                  InputLabelProps={{ shrink: true, required: true }}
+                  type="date"
+                  autoComplete="DOB"
+                  onChange={this.onChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="country"
+                  label="Country"
+                  name="country"
+                  autoComplete="country"
+                  onChange={this.onChange}
+                />
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Search 
+            </Button>
+            <Grid container justify="flex-end">
+              {/* <Grid item>
+                <Link href="/login" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid> */}
+            </Grid>
+          </form>
+        </div>
+        <Box mt={5}>
+          <Copyright />
+        </Box>
+      </Container>
+    );
+  }
+}
+
+const Candidate = withRouter(withFirebase(withStyles(useStyles)(CandidateDetails)));
+
+export default Candidate;

@@ -10,15 +10,14 @@ import { withAuthentication } from "./components/Session";
 import Navbar from "./components/Navbar";
 
 //Pages
-import home from "./pages/home";
+import candidate from "./pages/candidate";
 import signup from "./pages/signup";
 import login from "./pages/login";
 import cart from "./pages/cart";
-import profile from "./pages/profile";
+import admin from "./pages/admin";
 import landing from "./pages/landing";
 import forpass from "./pages/forpass"
 import passchange from "./pages/passchange"
-import upload from "./pages/upload";
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -51,15 +50,13 @@ class App extends Component {
                 <Route exact path="/" component={landing} />
                 <Route exact path="/signup" component={signup} />
                 <Route exact path="/login" component={login} />
-                <Route exact path="/profile" component={profile} />
-                <Route exact path="/home" component={home} />
+                <Route exact path="/admin" component={admin} />
+                <Route exact path="/candidate" component={candidate} />
                 <Route exact path="/forpass" component={forpass} />
                 <Route exact path="/passchange" component={passchange} />
-                <Route exact path="/upload" component={upload} />
               </Switch>
             </div>
           </Router>
-          fasfas
         </div>
       </MuiThemeProvider>
     );

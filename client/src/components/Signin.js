@@ -32,6 +32,7 @@ function Copyright() {
 const INITIAL_STATE = {
   email: "",
   password: "",
+  check : false,
   error: null,
 };
 
@@ -63,13 +64,19 @@ class SignInBase extends Component {
   }
 
   onSubmit = (event) => {
-    const { email, password } = this.state;
+    const { email, password, check } = this.state;
 
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push("/home");
+        console.log(this.state);
+        if(check === true){
+          this.props.history.push("/admin");
+        }else{
+          this.props.history.push("/candidate");
+        }
+        
       })
       .catch((error) => {
         this.setState({ error });
@@ -82,6 +89,12 @@ class SignInBase extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleChange = (event) =>{
+    this.setState({
+      check: event.target.checked
+    })
+    console.log(this.state)
+  };
   render() {
     const { classes } = this.props;
 
@@ -120,10 +133,11 @@ class SignInBase extends Component {
               autoComplete="current-password"
               onChange={this.onChange}
             />
-            {/* <FormControlLabel
+            <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
+              label="Login as admin"
+              onChange = {this.handleChange}
+            />
             <Button
               type="submit"
               fullWidth

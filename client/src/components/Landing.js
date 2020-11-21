@@ -9,21 +9,20 @@ export default class Landing extends Component {
     return (
       <div>
         <Paper className="image" elevation={3}>
-          <h1>Trendiness Dive</h1>
+          <h1>Resume Parser</h1>
 
-          <h4>we provide personalised trends for you over all seasons</h4>
+          <h4></h4>
           <br />
           <br />
           <br />
           <br />
           <p>
-            You can have anything you want in life if you dress for it. —Edith
-            Head
           </p>
         </Paper>
 
         <h1>About Us</h1>
-        <h2>Team Dominators</h2>
+        <h2>Piyush Shandilya (2K18/IT/082)</h2>
+        <h2>Prajjwal Kumar (2K18/IT/085)</h2>
       </div>
     );
   }

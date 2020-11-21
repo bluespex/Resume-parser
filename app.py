@@ -5,10 +5,10 @@ import resumeParse
 import utils
 app = Flask(__name__)
 
-upload_path = utils.piyush
+upload_path = utils.prajjwal
 
 UPLOAD_FOLDER = upload_path
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'txt', 'pdf'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

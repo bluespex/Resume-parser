@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import Profile from "../components/Profile";
+import Admin from "../components/Admin";
 
-export default class profile extends Component {
+export default class admin extends Component {
   render() {
     return (
       <div>
         <div className='profile-sexy'>
-          <h1> My Profile</h1>
+          <h1> Admin</h1>
         </div>
-        <Profile/>
+        <Admin/>
       </div>
     );
   }
