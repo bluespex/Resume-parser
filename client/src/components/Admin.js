@@ -17,6 +17,7 @@ const INITIAL_STATE = {
   email: "",
   error: null,
   candidates: [],
+  candidatesDetails: [],
 };
 
 const useStyles = {
@@ -84,6 +85,7 @@ class Adminbase extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
+    this.arr = [];
   }
 
   componentDidMount() {
@@ -104,7 +106,7 @@ class Adminbase extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  onSubmit = (event) => {
+  onSubmit = async (event) => {
     //loop here to change the array of candidates
     let i = 0;
     let fordel = [];
@@ -116,13 +118,11 @@ class Adminbase extends Component {
         .get()
         .then((snapshot) => {
           const curUser = snapshot.data().skills;
-          // console.log(snapshot.data().skills);
           curUser.forEach((ele) => {
             // console.log(ele);
             if (ele === this.state.skill) {
               found = 1;
-              // fordel.push(element);
-              console.log(element);
+              this.arr.push(element);
             }
           });
         })
@@ -131,15 +131,16 @@ class Adminbase extends Component {
         });
     }
 
-    if (i === this.state.candidates.length) {
+    setTimeout(() => {
+      // if (newState == -1) {
+      console.log(this.arr);
+      this.setState({ candidates: [] });
+      this.setState({ candidates: this.arr });
+      this.arr = [];
       this.setState({ skill: "" });
-      // fordel.forEach((element) => {
-      //   // this.state.candidates.splice(element, 1);
-      //   console.log(element);
-      // });
-
-      // console.log(fordel);
-    }
+      // }
+    }, 1000);
+    // await
   };
 
   onClear = (event) => {
@@ -193,6 +194,7 @@ class Adminbase extends Component {
             clear
           </Button>
         </div>
+
         <Grid container justify="center">
           {this.state.candidates.map((val, ind, ar) => {
             return <CandidateProfile id={ind} uid={val} />;

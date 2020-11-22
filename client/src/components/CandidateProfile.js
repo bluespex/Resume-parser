@@ -41,10 +41,12 @@ const useStyles = {
 };
 
 const INITIAL_STATE = {
+  id: "",
   name: "",
   email: "",
   mobile: "",
   image: "",
+  skills: [],
   error: null,
 };
 
@@ -56,6 +58,7 @@ class CandidateProfile extends Component {
 
   componentDidMount() {
     var userId = this.props.uid;
+    this.setState({ id: userId });
     console.log(userId);
     this.props.firebase.db
       .doc(`/users/${userId}`)
@@ -75,18 +78,26 @@ class CandidateProfile extends Component {
     return (
       <div>
         {/* {this.props.uid} */}
-        <Grid id={this.props.uid} item>
+        <Grid id={this.props.uid} item xs={12}>
           <Card className={classes.card}>
             <CardContent className={classes.cardContent}>
               <Typography gutterBottom variant="h5" component="h2">
                 {this.state.name}
               </Typography>
-              <Typography gutterBottom variant="h5" component="h2">
+              <Typography gutterBottom variant="textprimary">
                 {this.state.email}
               </Typography>
-              <Typography gutterBottom variant="h5" component="h2">
-                {this.state.mobile}
-              </Typography>
+
+              <Typography gutterBottom>{this.state.mobile}</Typography>
+              {/* <Grid container width="10%">
+                {this.state.skills.map((val, ind, arr) => {
+                  return (
+                    <Grid width="5%">
+                      <Card>{val}</Card>
+                    </Grid>
+                  );
+                })}
+              </Grid> */}
             </CardContent>
             <Button
               variant="contained"
