@@ -74,7 +74,7 @@ class SignInBase extends Component {
         if (check === true) {
           this.props.history.push("/admin");
         } else {
-          this.props.history.push("/candidate");
+          this.props.history.push("/home");
         }
       })
       .catch((error) => {

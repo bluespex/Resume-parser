@@ -55,6 +55,7 @@ const INITIAL_STATE = {
   experience:[],
   image: "",
   resume:"",
+  cgpa:"",
   error: null,
 };
 
@@ -227,7 +228,6 @@ class ProfileUp extends Component {
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
               </Grid>
-              {/* <Divider variant="middle" /> */}
               <Grid
                 container
                 direction="row"
@@ -235,16 +235,16 @@ class ProfileUp extends Component {
                 alignItems="center"
               >
                 <Grid item xs={3}>
-                  <Typography variant='h5' color = 'primary' gutterBottom = {true}><b>Email</b></Typography>
+                  <Typography variant='h5' color = 'primary' gutterBottom = {true}><b>CGPA</b></Typography>
                   <Divider variant="middle" /> 
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
                 <Grid item xs={3}>
-                  <Typography variant='h5' gutterBottom = {true}><b>:</b></Typography>
+                  <Typography variant='h5' gutterBottom = 'true'><b>:</b></Typography>
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
                 <Grid item xs={3}>
-                  <Typography variant='h5' color = 'primary' gutterBottom = {true}>{this.state.email}</Typography>
+                  <Typography variant='h5' color='primary' gutterBottom = 'true'>{this.state.cgpa}</Typography>
                   <Divider variant="middle" /> 
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
@@ -257,7 +257,29 @@ class ProfileUp extends Component {
                 alignItems="center"
               >
                 <Grid item xs={3}>
-                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}><b>Mobile Number</b></Typography>
+                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}><b>Email</b></Typography>
+                  <Divider variant="middle" /> 
+                  <Typography gutterBottom = {true}></Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant='h5' gutterBottom = {true}><b>:</b></Typography>
+                  <Typography gutterBottom = {true}></Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}>{this.state.email}</Typography>
+                  <Divider variant="middle" /> 
+                  <Typography gutterBottom = {true}></Typography>
+                </Grid>
+              </Grid>
+              {/* <Divider variant="middle" /> */}
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
+                <Grid item xs={3}>
+                  <Typography variant='h5' color = 'primary' gutterBottom = {true}><b>Mobile Number</b></Typography>
                   <Divider variant="middle" /> 
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
@@ -266,7 +288,7 @@ class ProfileUp extends Component {
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
                 <Grid item xs={3}>
-                  <Typography variant='h5' color='secondary' gutterBottom = 'true'>{this.state.mobile}</Typography>
+                  <Typography variant='h5' color='primary' gutterBottom = 'true'>{this.state.mobile}</Typography>
                   <Divider variant="middle" /> 
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
@@ -280,7 +302,7 @@ class ProfileUp extends Component {
                 alignItems="center"
               >
                 <Grid item xs={3} >
-                  <Typography variant='h5' color = 'primary' gutterBottom = {true}><b>Skills</b></Typography>
+                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}><b>Skills</b></Typography>
                   <Divider variant="middle" /> 
                 </Grid>
                 <Grid item xs={3}>
@@ -291,11 +313,12 @@ class ProfileUp extends Component {
                   {/* <Typography variant='h5' color = 'primary' gutterBottom = {true}>{this.state.country}</Typography> */}
                   {this.state.skills.map((val, ind, ar) => {
                     return (
-                      <Grid xs={12} sm={3}>
+                      <Grid xs={12} sm={3} color='secondary'>
                         <TextField
                           variant="outlined"
                           required
                           fullWidth
+                          color = 'secondary'
                           id="ind"
                           value={val}
                           onChange={this.onChange}
@@ -314,7 +337,7 @@ class ProfileUp extends Component {
                 alignItems="center"
               >
                 <Grid item xs={3}>
-                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}><b>Password</b></Typography>
+                  <Typography variant='h5' color = 'primary' gutterBottom = {true}><b>Password</b></Typography>
                   
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
@@ -344,7 +367,7 @@ class ProfileUp extends Component {
                 alignItems="center"
               >
                 <Grid item xs={3}>
-                  <Typography variant='h5' color = 'primary' gutterBottom = {true}><b>Resume</b></Typography>
+                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}><b>Resume</b></Typography>
                   
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
