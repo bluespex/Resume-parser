@@ -177,20 +177,20 @@ class CandidateDetails extends Component {
     this.uploadFile = imageFile;
     console.log(this.uploadFile);
   };
-    onSubmit = (event) => {
-      const userId = this.props.firebase.auth.currentUser.uid;
-      if(this.state.name===""){
-        return;
-      }
-      this.props.firebase.db.doc(`/users/${userId}`).update({
-        email: this.state.email,
-        mobile: this.state.mobile,
-        name: this.state.name,
-        roll: this.state.roll,
-      });
-      this.props.history.push("/home");
-      event.preventDefault();
-    };
+  onSubmit = (event) => {
+    const userId = this.props.firebase.auth.currentUser.uid;
+    if (this.state.name === "") {
+      return;
+    }
+    this.props.firebase.db.doc(`/users/${userId}`).update({
+      email: this.state.email,
+      mobile: this.state.mobile,
+      name: this.state.name,
+      roll: this.state.roll,
+    });
+    this.props.history.push("/home");
+    event.preventDefault();
+  };
 
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
@@ -306,7 +306,7 @@ class CandidateDetails extends Component {
                   onChange={this.onChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <TextField
                   variant="outlined"
                   required
@@ -318,8 +318,8 @@ class CandidateDetails extends Component {
                   type="date"
                   autoComplete="DOB"
                   onChange={this.onChange}
-                />
-              </Grid>
+                /> */}
+              {/* </Grid> */}
 
               <Grid item xs={12}>
                 <TextField
@@ -341,7 +341,7 @@ class CandidateDetails extends Component {
                   required
                   fullWidth
                   id="country"
-                  label="Country"
+                  label="Skills"
                   name="country"
                   autoComplete="country"
                   onChange={this.onChange}
@@ -351,7 +351,7 @@ class CandidateDetails extends Component {
             <Grid container justify="center">
               {this.state.skills.map((val, ind, ar) => {
                 return (
-                  <Grid>
+                  <Grid xs={12} sm={3}>
                     <TextField
                       variant="outlined"
                       required

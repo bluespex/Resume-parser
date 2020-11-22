@@ -103,6 +103,14 @@ def extract_roll(roll):
         return None
 
 
+def extract_cgpa(text):
+    cgpa = re.findall("([0-9][.][0-9][0-9])", text)
+    if cgpa:
+        return cgpa[0]
+    else:
+        return None
+
+
 def extract_education(nlp_text):
     '''
     Helper function to extract education from spacy nlp text
@@ -277,6 +285,9 @@ def fun(pp):
 
     name = extract_name(doc, __matcher)
 
+    cgpa = extract_cgpa(text_file)
+    print(cgpa)
+
     details["Name"] = name
     details["RollNo"] = extract_roll(text_file)
     details["Email"] = extract_email(text_file)
@@ -294,5 +305,5 @@ def fun(pp):
     # return details
 
 
-# gg = fun("C:/Users/piyush/Desktop/projects/resume-parser/sampleResumes/Prajjwal.pdf")
+gg = fun("C:/Users/piyush/Desktop/projects/resume-parser/sampleResumes/Prajjwal_Kumar_IT_085.pdf")
 # print(gg)
