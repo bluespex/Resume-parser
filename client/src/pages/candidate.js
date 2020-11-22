@@ -6,7 +6,7 @@ export default class admin extends Component {
     return (
       <div>
         <div className='profile-sexy'>
-          <h1> Candidate</h1>
+          {/* <h1> Candidate</h1> */}
         </div>
         <Candidate/>
       </div>

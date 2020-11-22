@@ -55,11 +55,10 @@ const useStyles = {
 const INITIAL_STATE = {
   email: "",
   password: "",
-  firstName: "",
-  lastName: "",
-  country: "",
+  name: "",
   mobile: "",
-  DOB: "",
+  roll:"",
+  skills:null,
   error: null,
 };
 
@@ -70,10 +69,108 @@ class CandidateDetails extends Component {
     this.state = { ...INITIAL_STATE };
     var uploadFile = null;
   }
+  // onUpload = (event) => {
+  //     event.preventDefault();
+  //     console.log("HELOO");
+  //     console.log(this.uploadFile);
+  //     const requestOptions = {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({url:this.uploadFile}),
+  //     };
+  //     var userMatch
+  //     fetch('http://localhost:5000/uploader', requestOptions)
+  //         .then(response => response.json())
+  //         .then(data => {
+  //           console.log(data);
+  //           // var keysSorted = Object.keys(data).sort(function(a,b){return data[b]-data[a]})
+  //           // console.log(keysSorted); 
+  //           // // userMatch = data
+  //           // this.props.firebase.db
+  //           // .doc(`/users/${userId}`)
+  //           // .update({ recommend: keysSorted });
+  //         })
+  //         .catch(err => console.log(err));
+  // };
   onUpload = (event) => {
     event.preventDefault();
-      console.log("HELOO");
-      console.log(this.uploadFile);
+    console.log(this.uploadFile);
+    if (this.uploadFile === null){
+      return;
+    }
+    const uploadTask = this.props.firebase.storage
+      .ref(`/images/${this.uploadFile.name}`)
+      .put(this.uploadFile);
+    //initiates the firebase side uploading
+    uploadTask.on(
+      "state_changed",
+      (snapShot) => {
+        //takes a snap shot of the process as it is happening
+        console.log(snapShot);
+      },
+      (err) => {
+        //catches the errors
+        console.log(err);
+      },
+      () => {
+        // gets the functions from storage refences the image storage in firebase by the children
+        // gets the download url then sets the image from firebase as the value for the imgUrl key:
+        this.props.firebase.storage
+          .ref("images")
+          .child(this.uploadFile.name)
+          .getDownloadURL()
+          .then((fireBaseUrl) => {
+            console.log(fireBaseUrl);
+            this.state.image = fireBaseUrl;
+            this.setState({ image: fireBaseUrl });
+
+            const userId = this.props.firebase.auth.currentUser.uid;
+
+            this.props.firebase.db
+              .doc(`/users/${userId}`)
+              .update({ resume: fireBaseUrl });
+            
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url: this.state.image })
+            };
+            console.log(JSON.stringify({ url: this.state.image }));
+            var userMatch
+            fetch('http://localhost:5000/uploader', requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                  console.log(data);
+                  console.log(data.Email);
+                  // var keysSorted = Object.keys(data).sort(function(a,b){return data[b]-data[a]})
+                  // console.log(keysSorted); 
+                  // // userMatch = data
+                  this.props.firebase.db
+                  .doc(`/users/${userId}`)
+                  .update({ 
+                    email: data.Email,
+                    mobile : data.Mobile,
+                    name : data.Name,
+                    roll : data.RollNo,
+                    experience : data.experience,
+                    skills : data.skills,
+                  });
+                  this.setState({
+                    email: data.Email,
+                    mobile : data.Mobile,
+                    name : data.Name,
+                    roll : data.RollNo,
+                    experience : data.experience,
+                    skills : data.skills,
+                  });
+                  console.log(this.state);
+                  
+                })
+                .catch(err => console.log(err));
+            // console.log(userMatch);
+        });
+      }
+    );
   };
 
   imageChange = (event) => {
@@ -137,7 +234,7 @@ class CandidateDetails extends Component {
             {/* <LockOutlinedIcon /> */}
           </Avatar>
           <Typography component="h1" variant="h5">
-            HOME
+            APPLY
           </Typography>
           <Grid item xs={12}>
                 <form onSubmit={this.onUpload} className={classes.form}>
@@ -155,20 +252,32 @@ class CandidateDetails extends Component {
           </Grid>
           <form className={classes.form} noValidate onSubmit={this.onSubmit}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="fname"
-                  name="firstName"
+              <Grid item xs={12}>
+                {/* <TextField
+                  autoComplete="fullname"
+                  name="fullName"
                   variant="outlined"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
+                  id="fullName"
+                  label="Full Name"
+                  // autoFocus
+                  value={this.state.name}
+                  onChange={this.onChange}
+                /> */}
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="fullname"
+                  label="Full Name"
+                  name="fullname"
+                  autoComplete="fullname"
+                  value={this.state.name}
                   onChange={this.onChange}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   variant="outlined"
                   required
@@ -179,7 +288,7 @@ class CandidateDetails extends Component {
                   autoComplete="lname"
                   onChange={this.onChange}
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -189,6 +298,7 @@ class CandidateDetails extends Component {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={this.state.email}
                   onChange={this.onChange}
                 />
               </Grid>
@@ -197,11 +307,12 @@ class CandidateDetails extends Component {
                   variant="outlined"
                   required
                   fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
+                  name="roll"
+                  label="Roll Number"
+                  type="roll"
+                  id="roll"
+                  autoComplete="roll"
+                  value = {this.state.roll}
                   onChange={this.onChange}
                 />
               </Grid>
@@ -214,6 +325,7 @@ class CandidateDetails extends Component {
                   label="Mobile Number"
                   name="mobile"
                   autoComplete="mobile"
+                  value = {this.state.mobile}
                   onChange={this.onChange}
                 />
               </Grid>

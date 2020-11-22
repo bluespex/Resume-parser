@@ -52,11 +52,11 @@ const useStyles = {
 const INITIAL_STATE = {
   email: "",
   password: "",
-  firstName: "",
-  lastName: "",
-  country: "",
-  mobile: "",
-  DOB: "",
+  // firstName: "",
+  // lastName: "",
+  // country: "",
+  // mobile: "",
+  // DOB: "",
   error: null,
 };
 
@@ -69,13 +69,8 @@ class SignUpBase extends Component {
 
   onSubmit = (event) => {
     const {
-      firstName,
-      lastName,
       email,
       password,
-      mobile,
-      DOB,
-      country,
     } = this.state;
 
     this.props.firebase
@@ -84,11 +79,6 @@ class SignUpBase extends Component {
         console.log(authUser.user.uid);
         const newUser = {
           email: this.state.email,
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          mobile: this.state.mobile,
-          DOB: this.state.DOB,
-          country: this.state.country,
           image:
             "https://firebasestorage.googleapis.com/v0/b/dressify-59ab5.appspot.com/o/no-img.png?alt=media&token=e9f35f49-0354-49f6-bb26-7538a523b3a3",
         };
@@ -98,7 +88,7 @@ class SignUpBase extends Component {
       })
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push("/profile");
+        this.props.history.push("/candidate");
       })
       .catch((error) => {
         console.log(error);
@@ -127,31 +117,6 @@ class SignUpBase extends Component {
           </Typography>
           <form className={classes.form} noValidate onSubmit={this.onSubmit}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="fname"
-                  name="firstName"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                  onChange={this.onChange}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="lname"
-                  onChange={this.onChange}
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -170,7 +135,7 @@ class SignUpBase extends Component {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="Enter Password"
                   type="password"
                   id="password"
                   autoComplete="current-password"
@@ -182,36 +147,11 @@ class SignUpBase extends Component {
                   variant="outlined"
                   required
                   fullWidth
-                  id="mobile"
-                  label="Mobile Number"
-                  name="mobile"
-                  autoComplete="mobile"
-                  onChange={this.onChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="DOB"
-                  label="Date Of Birth"
-                  name="DOB"
-                  InputLabelProps={{ shrink: true, required: true }}
-                  type="date"
-                  autoComplete="DOB"
-                  onChange={this.onChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="country"
-                  label="Country"
-                  name="country"
-                  autoComplete="country"
+                  name="password"
+                  label="Confirm Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
                   onChange={this.onChange}
                 />
               </Grid>
