@@ -43,6 +43,7 @@ const useStyles = {
 const INITIAL_STATE = {
   name: "",
   email: "",
+  mobile: "",
   image: "",
   error: null,
 };
@@ -54,20 +55,20 @@ class CandidateProfile extends Component {
   }
 
   componentDidMount() {
-    const userId = this.props.uid;
+    var userId = this.props.uid;
     console.log(userId);
     this.props.firebase.db
       .doc(`/users/${userId}`)
       .get()
       .then((snapshot) => {
-        const curUser = snapshot.data();
+        var curUser = snapshot.data();
         console.log(snapshot.data());
         this.setState(curUser);
       })
       .catch((error) => {
         console.log(error);
       });
-    console.log(this.state);
+    // console.log(this.state);
   }
   render() {
     const { classes } = this.props;

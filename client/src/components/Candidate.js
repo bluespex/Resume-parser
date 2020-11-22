@@ -57,8 +57,9 @@ const INITIAL_STATE = {
   password: "",
   name: "",
   mobile: "",
-  roll:"",
-  skills:null,
+  roll: "",
+  skills: [],
+  experience: [],
   error: null,
 };
 
@@ -69,6 +70,7 @@ class CandidateDetails extends Component {
     this.state = { ...INITIAL_STATE };
     var uploadFile = null;
   }
+  componentDidMount() {}
   // onUpload = (event) => {
   //     event.preventDefault();
   //     console.log("HELOO");
@@ -84,7 +86,7 @@ class CandidateDetails extends Component {
   //         .then(data => {
   //           console.log(data);
   //           // var keysSorted = Object.keys(data).sort(function(a,b){return data[b]-data[a]})
-  //           // console.log(keysSorted); 
+  //           // console.log(keysSorted);
   //           // // userMatch = data
   //           // this.props.firebase.db
   //           // .doc(`/users/${userId}`)
@@ -95,7 +97,7 @@ class CandidateDetails extends Component {
   onUpload = (event) => {
     event.preventDefault();
     console.log(this.uploadFile);
-    if (this.uploadFile === null){
+    if (this.uploadFile === null) {
       return;
     }
     const uploadTask = this.props.firebase.storage
@@ -129,46 +131,43 @@ class CandidateDetails extends Component {
             this.props.firebase.db
               .doc(`/users/${userId}`)
               .update({ resume: fireBaseUrl });
-            
+
             const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ url: this.state.image })
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ url: this.state.image }),
             };
             console.log(JSON.stringify({ url: this.state.image }));
-            var userMatch
-            fetch('http://localhost:5000/uploader', requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                  console.log(data);
-                  console.log(data.Email);
-                  // var keysSorted = Object.keys(data).sort(function(a,b){return data[b]-data[a]})
-                  // console.log(keysSorted); 
-                  // // userMatch = data
-                  this.props.firebase.db
-                  .doc(`/users/${userId}`)
-                  .update({ 
-                    email: data.Email,
-                    mobile : data.Mobile,
-                    name : data.Name,
-                    roll : data.RollNo,
-                    experience : data.experience,
-                    skills : data.skills,
-                  });
-                  this.setState({
-                    email: data.Email,
-                    mobile : data.Mobile,
-                    name : data.Name,
-                    roll : data.RollNo,
-                    experience : data.experience,
-                    skills : data.skills,
-                  });
-                  console.log(this.state);
-                  
-                })
-                .catch(err => console.log(err));
+            var userMatch;
+            fetch("http://localhost:5000/uploader", requestOptions)
+              .then((response) => response.json())
+              .then((data) => {
+                console.log(data);
+                console.log(data.Email);
+                // var keysSorted = Object.keys(data).sort(function(a,b){return data[b]-data[a]})
+                // console.log(keysSorted);
+                // // userMatch = data
+                this.props.firebase.db.doc(`/users/${userId}`).update({
+                  email: data.Email,
+                  mobile: data.Mobile,
+                  name: data.Name,
+                  roll: data.RollNo,
+                  experience: data.experience,
+                  skills: data.skills,
+                });
+                this.setState({
+                  email: data.Email,
+                  mobile: data.Mobile,
+                  name: data.Name,
+                  roll: data.RollNo,
+                  experience: data.experience,
+                  skills: data.skills,
+                });
+                console.log(this.state);
+              })
+              .catch((err) => console.log(err));
             // console.log(userMatch);
-        });
+          });
       }
     );
   };
@@ -178,46 +177,46 @@ class CandidateDetails extends Component {
     this.uploadFile = imageFile;
     console.log(this.uploadFile);
   };
-//   onSubmit = (event) => {
-//     const {
-//       firstName,
-//       lastName,
-//       email,
-//       password,
-//       mobile,
-//       DOB,
-//       country,
-//     } = this.state;
+  //   onSubmit = (event) => {
+  //     const {
+  //       firstName,
+  //       lastName,
+  //       email,
+  //       password,
+  //       mobile,
+  //       DOB,
+  //       country,
+  //     } = this.state;
 
-//     this.props.firebase
-//       .doCreateUserWithEmailAndPassword(email, password)
-//       .then((authUser) => {
-//         console.log(authUser.user.uid);
-//         const newUser = {
-//           email: this.state.email,
-//           firstName: this.state.firstName,
-//           lastName: this.state.lastName,
-//           mobile: this.state.mobile,
-//           DOB: this.state.DOB,
-//           country: this.state.country,
-//           image:
-//             "https://firebasestorage.googleapis.com/v0/b/dressify-59ab5.appspot.com/o/no-img.png?alt=media&token=e9f35f49-0354-49f6-bb26-7538a523b3a3",
-//         };
-//         return this.props.firebase.db
-//           .doc(`/users/${authUser.user.uid}`)
-//           .set(newUser);
-//       })
-//       .then(() => {
-//         this.setState({ ...INITIAL_STATE });
-//         this.props.history.push("/profile");
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//         this.setState({ error });
-//       });
+  //     this.props.firebase
+  //       .doCreateUserWithEmailAndPassword(email, password)
+  //       .then((authUser) => {
+  //         console.log(authUser.user.uid);
+  //         const newUser = {
+  //           email: this.state.email,
+  //           firstName: this.state.firstName,
+  //           lastName: this.state.lastName,
+  //           mobile: this.state.mobile,
+  //           DOB: this.state.DOB,
+  //           country: this.state.country,
+  //           image:
+  //             "https://firebasestorage.googleapis.com/v0/b/dressify-59ab5.appspot.com/o/no-img.png?alt=media&token=e9f35f49-0354-49f6-bb26-7538a523b3a3",
+  //         };
+  //         return this.props.firebase.db
+  //           .doc(`/users/${authUser.user.uid}`)
+  //           .set(newUser);
+  //       })
+  //       .then(() => {
+  //         this.setState({ ...INITIAL_STATE });
+  //         this.props.history.push("/profile");
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //         this.setState({ error });
+  //       });
 
-//     event.preventDefault();
-//   };
+  //     event.preventDefault();
+  //   };
 
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
@@ -237,18 +236,22 @@ class CandidateDetails extends Component {
             APPLY
           </Typography>
           <Grid item xs={12}>
-                <form onSubmit={this.onUpload} className={classes.form}>
-                <input type="file" onChange={this.imageChange} className={classes.box}></input>
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.upload}
-                >
-                    Upload
-                </Button>
-                </form>
+            <form onSubmit={this.onUpload} className={classes.form}>
+              <input
+                type="file"
+                onChange={this.imageChange}
+                className={classes.box}
+              ></input>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.upload}
+              >
+                Upload
+              </Button>
+            </form>
           </Grid>
           <form className={classes.form} noValidate onSubmit={this.onSubmit}>
             <Grid container spacing={2}>
@@ -312,7 +315,7 @@ class CandidateDetails extends Component {
                   type="roll"
                   id="roll"
                   autoComplete="roll"
-                  value = {this.state.roll}
+                  value={this.state.roll}
                   onChange={this.onChange}
                 />
               </Grid>
@@ -325,7 +328,7 @@ class CandidateDetails extends Component {
                   label="Mobile Number"
                   name="mobile"
                   autoComplete="mobile"
-                  value = {this.state.mobile}
+                  value={this.state.mobile}
                   onChange={this.onChange}
                 />
               </Grid>
@@ -343,6 +346,21 @@ class CandidateDetails extends Component {
                   onChange={this.onChange}
                 />
               </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="experience"
+                  label="experience"
+                  name="experience"
+                  autoComplete="experience"
+                  value={this.state.experience[0]}
+                  onChange={this.onChange}
+                />
+              </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -356,6 +374,22 @@ class CandidateDetails extends Component {
                 />
               </Grid>
             </Grid>
+            <Grid container justify="center">
+              {this.state.skills.map((val, ind, ar) => {
+                return (
+                  <Grid>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="ind"
+                      value={val}
+                      onChange={this.onChange}
+                    />
+                  </Grid>
+                );
+              })}
+            </Grid>
             <Button
               type="submit"
               fullWidth
@@ -363,7 +397,7 @@ class CandidateDetails extends Component {
               color="primary"
               className={classes.submit}
             >
-              Search 
+              Search
             </Button>
             <Grid container justify="flex-end">
               {/* <Grid item>
@@ -374,6 +408,7 @@ class CandidateDetails extends Component {
             </Grid>
           </form>
         </div>
+
         <Box mt={5}>
           <Copyright />
         </Box>
@@ -382,6 +417,8 @@ class CandidateDetails extends Component {
   }
 }
 
-const Candidate = withRouter(withFirebase(withStyles(useStyles)(CandidateDetails)));
+const Candidate = withRouter(
+  withFirebase(withStyles(useStyles)(CandidateDetails))
+);
 
 export default Candidate;
