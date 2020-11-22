@@ -1,3 +1,4 @@
+import spacy
 from pdfminer.converter import TextConverter
 from pdfminer.pdfinterp import PDFPageInterpreter
 from pdfminer.pdfinterp import PDFResourceManager
@@ -12,10 +13,10 @@ import constants as cs
 import nltk
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
+from spacy.matcher import Matcher
 
 details = {}
 
-import spacy 
 
 def extract_text_from_pdf(pdf_path):
     with open(pdf_path, 'rb') as fh:
@@ -23,27 +24,27 @@ def extract_text_from_pdf(pdf_path):
         for page in PDFPage.get_pages(fh, caching=True, check_extractable=True):
             # creating a resoure manager
             resource_manager = PDFResourceManager()
-            
+
             # create a file handle
             fake_file_handle = io.StringIO()
-            
+
             # creating a text converter object
             converter = TextConverter(
-                                resource_manager, 
-                                fake_file_handle, 
-                                codec='utf-8', 
-                                laparams=LAParams()
-                        )
+                resource_manager,
+                fake_file_handle,
+                codec='utf-8',
+                laparams=LAParams()
+            )
 
             # creating a page interpreter
             page_interpreter = PDFPageInterpreter(
-                                resource_manager, 
-                                converter
-                            )
+                resource_manager,
+                converter
+            )
 
             # process current page
             page_interpreter.process_page(page)
-            
+
             # extract text
             text = fake_file_handle.getvalue()
             yield text
@@ -52,15 +53,37 @@ def extract_text_from_pdf(pdf_path):
             converter.close()
             fake_file_handle.close()
 
+
+def extract_name(nlp_text, matcher):
+    '''
+    Helper function to extract name from spacy nlp text
+    :param nlp_text: object of `spacy.tokens.doc.Doc`
+    :param matcher: object of `spacy.matcher.Matcher`
+    :return: string of full name
+    '''
+    pattern = [cs.NAME_PATTERN]
+
+    matcher.add('NAME', None, *pattern)
+
+    matches = matcher(nlp_text)
+
+    for _, start, end in matches:
+        span = nlp_text[start:end]
+        if 'name' not in span.text.lower():
+            return span.text
+
+
 def extract_mobile_number(text):
-    phone = re.findall(re.compile(r'(?:(?:\+?([1-9]|[0-9][0-9]|[0-9][0-9][0-9])\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([0-9][1-9]|[0-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?'), text)
-    
+    phone = re.findall(re.compile(
+        r'(?:(?:\+?([1-9]|[0-9][0-9]|[0-9][0-9][0-9])\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([0-9][1-9]|[0-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?'), text)
+
     if phone:
         number = ''.join(phone[0])
         if len(number) > 10:
             return '+' + number
         else:
             return number
+
 
 def extract_email(email):
     email = re.findall("([^@|\s]+@[^@]+\.[^@|\s]+)", email)
@@ -70,12 +93,15 @@ def extract_email(email):
         except IndexError:
             return None
 
+
 def extract_roll(roll):
-    roll = re.findall("([0-9][a-zA-Z][0-9][0-9][/][a-zA-Z][a-zA-Z][/][0-9][0-9][0-9])",roll)
+    roll = re.findall(
+        "([0-9][a-zA-Z][0-9][0-9][/][a-zA-Z][a-zA-Z][/][0-9][0-9][0-9])", roll)
     if roll:
         return roll[0]
     else:
         return None
+
 
 def extract_education(nlp_text):
     '''
@@ -105,6 +131,7 @@ def extract_education(nlp_text):
             education.append(key)
     return education
 
+
 def extract_experience(resume_text):
     '''
     Helper function to extract experience from resume text
@@ -119,10 +146,10 @@ def extract_experience(resume_text):
 
     # remove stop words and lemmatize
     filtered_sentence = [
-            w for w in word_tokens if w not
-            in stop_words and wordnet_lemmatizer.lemmatize(w)
-            not in stop_words
-        ]
+        w for w in word_tokens if w not
+        in stop_words and wordnet_lemmatizer.lemmatize(w)
+        not in stop_words
+    ]
     sent = nltk.pos_tag(filtered_sentence)
 
     # parse regex
@@ -227,7 +254,6 @@ def extract_entity_sections_grad(text):
     return entities
 
 
-
 def fun(pp):
     resume_path = pp
     text_file = ""
@@ -239,23 +265,19 @@ def fun(pp):
     __noun_chunks = list(doc.noun_chunks)
     # __skills_file = 1
     skills = extract_skills(
-                    doc,
-                    __noun_chunks
-                )
+        doc,
+        __noun_chunks
+    )
     entities = extract_entity_sections_grad(text_file)
     # print(entities)
     experience = extract_experience(text_file)
     # print(experience)
 
+    __matcher = Matcher(nlp.vocab)
 
-    text = text_file.split(' ')
-    resume_text = []
-    for i in text:
-        if i is not '':
-            resume_text.append(i)
+    name = extract_name(doc, __matcher)
 
-    
-    details["Name"] = resume_text[0] + ' ' + resume_text[1]
+    details["Name"] = name
     details["RollNo"] = extract_roll(text_file)
     details["Email"] = extract_email(text_file)
     details["Mobile"] = extract_mobile_number(text_file)
@@ -271,5 +293,6 @@ def fun(pp):
     # # print(details)
     # return details
 
-# gg = fun("C:/Users/piyush/Desktop/projects/resume-parser/sampleResumes/Apaar kamal.pdf")
+
+# gg = fun("C:/Users/piyush/Desktop/projects/resume-parser/sampleResumes/Prajjwal.pdf")
 # print(gg)
