@@ -30,19 +30,11 @@ def extract_text_from_pdf(pdf_path):
 
             # creating a text converter object
             converter = TextConverter(
-<<<<<<< HEAD
                 resource_manager,
                 fake_file_handle,
-                codec='utf-8',
+                # codec='utf-8',
                 laparams=LAParams()
             )
-=======
-                                resource_manager, 
-                                fake_file_handle, 
-                                # codec='utf-8', 
-                                laparams=LAParams()
-                        )
->>>>>>> 97e5cd5bae866f63a9e78b032010caecdf1c0ff2
 
             # creating a page interpreter
             page_interpreter = PDFPageInterpreter(
