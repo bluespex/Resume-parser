@@ -341,11 +341,12 @@ class CandidateDetails extends Component {
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
-                  required
+                  // required
                   fullWidth
                   id="experience"
                   label="experience"
                   name="experience"
+                  // type="experience"
                   autoComplete="experience"
                   value={this.state.experience[0]}
                   onChange={this.onChange}
@@ -357,10 +358,10 @@ class CandidateDetails extends Component {
                   variant="outlined"
                   required
                   fullWidth
-                  id="country"
+                  id="skills"
                   label="Skills"
-                  name="country"
-                  autoComplete="country"
+                  name="skills"
+                  autoComplete="skills"
                   onChange={this.onChange}
                 />
               </Grid>
