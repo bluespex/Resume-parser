@@ -104,7 +104,7 @@ def extract_roll(roll):
 
 
 def extract_cgpa(text):
-    cgpa = re.findall("([0-9][.][0-9][0-9])", text)
+    cgpa = re.findall("([6-9][.][0-9][0-9])", text)
     if cgpa:
         return cgpa[0]
     else:
@@ -286,7 +286,7 @@ def fun(pp):
     name = extract_name(doc, __matcher)
 
     cgpa = extract_cgpa(text_file)
-    print(cgpa)
+    # print(cgpa)
 
     details["Name"] = name
     details["cgpa"] = cgpa
@@ -306,5 +306,5 @@ def fun(pp):
     # return details
 
 
-gg = fun("C:/Users/piyush/Desktop/projects/resume-parser/sampleResumes/Prajjwal_Kumar_IT_085.pdf")
+# gg = fun("C:/Users/piyush/Desktop/projects/resume-parser/sampleResumes/Prajjwal_Kumar_IT_085.pdf")
 # print(gg)

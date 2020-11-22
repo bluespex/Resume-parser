@@ -7,6 +7,7 @@ import { withFirebase } from "../Firebase";
 import { withRouter } from "react-router-dom";
 import Link from "react-router-dom/Link";
 import Divider from '@material-ui/core/Divider';
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = {
    box: {
@@ -46,13 +47,15 @@ const useStyles = {
 
 
 const INITIAL_STATE = {
-  email: "prajjwal@gmail.com",
-  firstName: "prajjwal",
-  lastName: "kumar",
-  country: "India",
-  mobile: "1234567890",
-  DOB: "29/12/1999",
+  email: "",
+  name: "",
+  roll: "",
+  mobile: "",
+  skills:[],
+  experience:[],
   image: "",
+  resume:"",
+  cgpa:"",
   error: null,
 };
 
@@ -116,31 +119,31 @@ class ProfileUp extends Component {
             this.props.firebase.db
               .doc(`/users/${userId}`)
               .update({ image: fireBaseUrl });
-            
-            const requestOptions = {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ url: this.state.image })
-            };
-            console.log(JSON.stringify({ url: this.state.image }));
-            var userMatch
-            fetch('http://localhost:5000/uploader', requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                  console.log(data);
-                  var keysSorted = Object.keys(data).sort(function(a,b){return data[b]-data[a]})
-                  console.log(keysSorted); 
-                  // userMatch = data
-                  this.props.firebase.db
-                  .doc(`/users/${userId}`)
-                  .update({ recommend: keysSorted });
-                })
-                .catch(err => console.log(err));
+            // const requestOptions = {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ url: this.state.image })
+            // };
+            // console.log(JSON.stringify({ url: this.state.image }));
+            // var userMatch
+            // fetch('http://localhost:5000/uploader', requestOptions)
+            //     .then(response => response.json())
+            //     .then(data => {
+            //       console.log(data);
+            //       var keysSorted = Object.keys(data).sort(function(a,b){return data[b]-data[a]})
+            //       console.log(keysSorted); 
+            //       // userMatch = data
+            //       this.props.firebase.db
+            //       .doc(`/users/${userId}`)
+            //       .update({ recommend: keysSorted });
+            //     })
+            //     .catch(err => console.log(err));
             // console.log(userMatch);
         });
       }
     );
   };
+
 
   imageChange = (event) => {
     const imageFile = event.target.files[0];
@@ -156,7 +159,7 @@ class ProfileUp extends Component {
           <Grid item xs={6} sm={4}>
             <Paper className={classes.paper}>
               <img className={classes.image} src={this.state.image}></img>
-              <Typography className={classes.gg}>{this.state.firstName} {this.state.lastName}</Typography>
+              <Typography className={classes.gg}>{this.state.name}</Typography>
             </Paper>
             <form onSubmit={this.onSubmit} className={classes.form}>
               <input type="file" onChange={this.imageChange} className={classes.box}></input>
@@ -184,7 +187,7 @@ class ProfileUp extends Component {
                 <Typography gutterBottom = {true}></Typography>
                 <Grid item xs={3}>
                 <Typography gutterBottom = {true}></Typography>
-                  <Typography variant='h5' color = 'primary' gutterBottom = {true}><b>First Name</b></Typography>
+                  <Typography variant='h5' color = 'primary' gutterBottom = {true}><b>Name</b></Typography>
                   <Divider variant="middle" />
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
@@ -196,7 +199,7 @@ class ProfileUp extends Component {
                 
                 <Grid item xs={3}>
                   <Typography gutterBottom = {true}></Typography>
-                  <Typography variant='h5' color = 'primary' gutterBottom = {true}>{this.state.firstName}</Typography>
+                  <Typography variant='h5' color = 'primary' gutterBottom = {true}>{this.state.name}</Typography>
                   <Divider variant="middle" />
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
@@ -211,7 +214,7 @@ class ProfileUp extends Component {
 
               >
                 <Grid item xs={3} p={10}>
-                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}><b>Last Name</b></Typography>
+                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}><b>Roll Number</b></Typography>
                   <Divider variant="middle" /> 
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
@@ -220,12 +223,11 @@ class ProfileUp extends Component {
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
                 <Grid item xs={3}>
-                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}> {this.state.lastName}</Typography>
+                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}> {this.state.roll}</Typography>
                   <Divider variant="middle" /> 
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
               </Grid>
-              {/* <Divider variant="middle" /> */}
               <Grid
                 container
                 direction="row"
@@ -233,29 +235,7 @@ class ProfileUp extends Component {
                 alignItems="center"
               >
                 <Grid item xs={3}>
-                  <Typography variant='h5' color = 'primary' gutterBottom = {true}><b>Email</b></Typography>
-                  <Divider variant="middle" /> 
-                  <Typography gutterBottom = {true}></Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant='h5' gutterBottom = {true}><b>:</b></Typography>
-                  <Typography gutterBottom = {true}></Typography>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant='h5' color = 'primary' gutterBottom = {true}>{this.state.email}</Typography>
-                  <Divider variant="middle" /> 
-                  <Typography gutterBottom = {true}></Typography>
-                </Grid>
-              </Grid>
-              {/* <Divider variant="middle" /> */}
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-              >
-                <Grid item xs={3}>
-                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}><b>Mobile Number</b></Typography>
+                  <Typography variant='h5' color = 'primary' gutterBottom = {true}><b>CGPA</b></Typography>
                   <Divider variant="middle" /> 
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
@@ -264,7 +244,51 @@ class ProfileUp extends Component {
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
                 <Grid item xs={3}>
-                  <Typography variant='h5' color='secondary' gutterBottom = 'true'>{this.state.mobile}</Typography>
+                  <Typography variant='h5' color='primary' gutterBottom = 'true'>{this.state.cgpa}</Typography>
+                  <Divider variant="middle" /> 
+                  <Typography gutterBottom = {true}></Typography>
+                </Grid>
+              </Grid>
+              {/* <Divider variant="middle" /> */}
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
+                <Grid item xs={3}>
+                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}><b>Email</b></Typography>
+                  <Divider variant="middle" /> 
+                  <Typography gutterBottom = {true}></Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant='h5' gutterBottom = {true}><b>:</b></Typography>
+                  <Typography gutterBottom = {true}></Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}>{this.state.email}</Typography>
+                  <Divider variant="middle" /> 
+                  <Typography gutterBottom = {true}></Typography>
+                </Grid>
+              </Grid>
+              {/* <Divider variant="middle" /> */}
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
+                <Grid item xs={3}>
+                  <Typography variant='h5' color = 'primary' gutterBottom = {true}><b>Mobile Number</b></Typography>
+                  <Divider variant="middle" /> 
+                  <Typography gutterBottom = {true}></Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant='h5' gutterBottom = 'true'><b>:</b></Typography>
+                  <Typography gutterBottom = {true}></Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant='h5' color='primary' gutterBottom = 'true'>{this.state.mobile}</Typography>
                   <Divider variant="middle" /> 
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
@@ -278,14 +302,30 @@ class ProfileUp extends Component {
                 alignItems="center"
               >
                 <Grid item xs={3} >
-                  <Typography variant='h5' color = 'primary' gutterBottom = {true}><b>Country</b></Typography>
+                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}><b>Skills</b></Typography>
                   <Divider variant="middle" /> 
                 </Grid>
                 <Grid item xs={3}>
                   <Typography variant='h5' gutterBottom = {true}><b>:</b></Typography>
                 </Grid>
-                <Grid item xs={3}>
-                  <Typography variant='h5' color = 'primary' gutterBottom = {true}>{this.state.country}</Typography>
+                <Grid item xs={3}></Grid>
+                <Grid container>
+                  {/* <Typography variant='h5' color = 'primary' gutterBottom = {true}>{this.state.country}</Typography> */}
+                  {this.state.skills.map((val, ind, ar) => {
+                    return (
+                      <Grid xs={12} sm={3} color='secondary'>
+                        <TextField
+                          variant="outlined"
+                          required
+                          fullWidth
+                          color = 'secondary'
+                          id="ind"
+                          value={val}
+                          onChange={this.onChange}
+                        />
+                      </Grid>
+                    );
+                    })}
                   <Divider variant="middle" /> 
                 </Grid>
               </Grid>
@@ -297,7 +337,7 @@ class ProfileUp extends Component {
                 alignItems="center"
               >
                 <Grid item xs={3}>
-                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}><b>Password</b></Typography>
+                  <Typography variant='h5' color = 'primary' gutterBottom = {true}><b>Password</b></Typography>
                   
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>
@@ -316,6 +356,37 @@ class ProfileUp extends Component {
                     component={Link} to="/passchange"
                   >
                     Change My Password
+                  </Button>
+                  <Typography gutterBottom = {true}></Typography>
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
+                <Grid item xs={3}>
+                  <Typography variant='h5' color = 'secondary' gutterBottom = {true}><b>Resume</b></Typography>
+                  
+                  <Typography gutterBottom = {true}></Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  <Typography variant='h5' gutterBottom = {true}><b>:</b></Typography>
+                  <Typography gutterBottom = {true}></Typography>
+                </Grid>
+                <Grid item xs={3}>
+                  {/* <Typography variant='h5' color = 'primary' gutterBottom = {true}>{this.state.email}</Typography> */}
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="secondary"
+                    className={classes.submit}
+                    component={Link} to="/candidate"
+                    onClick={this.onResume}
+                  >
+                    Update Your Resume
                   </Button>
                   <Typography gutterBottom = {true}></Typography>
                 </Grid>

@@ -60,6 +60,7 @@ const INITIAL_STATE = {
   roll: "",
   skills: [],
   experience: [],
+  cgpa:"",
   error: null,
 };
 
@@ -154,6 +155,7 @@ class CandidateDetails extends Component {
                   roll: data.RollNo,
                   experience: data.experience,
                   skills: data.skills,
+                  cgpa : data.cgpa,
                 });
                 this.setState({
                   email: data.Email,
@@ -162,6 +164,7 @@ class CandidateDetails extends Component {
                   roll: data.RollNo,
                   experience: data.experience,
                   skills: data.skills,
+                  cgpa : data.cgpa,
                 });
                 console.log(this.state);
               })
@@ -187,6 +190,7 @@ class CandidateDetails extends Component {
       mobile: this.state.mobile,
       name: this.state.name,
       roll: this.state.roll,
+      cgpa : this.state.cgpa,
     });
     this.props.history.push("/home");
     event.preventDefault();
@@ -298,6 +302,19 @@ class CandidateDetails extends Component {
                   variant="outlined"
                   required
                   fullWidth
+                  id="cgpa"
+                  label="CGPA"
+                  name="cgpa"
+                  autoComplete="cgpa"
+                  value={this.state.cgpa}
+                  onChange={this.onChange}
+                />  
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
                   id="mobile"
                   label="Mobile Number"
                   name="mobile"
@@ -324,11 +341,12 @@ class CandidateDetails extends Component {
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
-                  required
+                  // required
                   fullWidth
                   id="experience"
                   label="experience"
                   name="experience"
+                  // type="experience"
                   autoComplete="experience"
                   value={this.state.experience[0]}
                   onChange={this.onChange}
@@ -340,10 +358,10 @@ class CandidateDetails extends Component {
                   variant="outlined"
                   required
                   fullWidth
-                  id="country"
+                  id="skills"
                   label="Skills"
-                  name="country"
-                  autoComplete="country"
+                  name="skills"
+                  autoComplete="skills"
                   onChange={this.onChange}
                 />
               </Grid>
@@ -371,7 +389,7 @@ class CandidateDetails extends Component {
               color="primary"
               className={classes.submit}
             >
-              Search
+              Search Jobs
             </Button>
             <Grid container justify="flex-end">
               {/* <Grid item>
