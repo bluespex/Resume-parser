@@ -32,6 +32,9 @@ const useStyles = {
     flexDirection: "column",
     alignItems: "center",
   },
+  name: {
+    marginTop: "100px",
+  },
   gg: {
     "font-size": "30px",
     padding: "10px",
@@ -52,13 +55,13 @@ const useStyles = {
     marginTop: "16px",
   },
   submit: {
-    margin: "16px 0px 8px",
+    margin: "16px 2px 8px",
   },
   search: {
     position: "relative",
-    backgroundColor: "pink",
-
-    marginLeft: 0,
+    backgroundColor: "#b4ffff",
+    marginBottom: "30px",
+    marginLeft: "33%",
     width: "35%",
   },
   searchIcon: {
@@ -162,6 +165,15 @@ class Adminbase extends Component {
     const { classes } = this.props;
     return (
       <div className="homecontainer">
+        <Typography
+          variant="h2"
+          color="primary"
+          gutterBottom
+          className={classes.name}
+        >
+          {this.state.companyName}
+        </Typography>
+
         <div className={classes.search}>
           <div className={classes.searchIcon}>
             <SearchIcon />

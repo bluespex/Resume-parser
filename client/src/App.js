@@ -23,22 +23,22 @@ import home from "./pages/home";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: "#c158dc",
-      main: "#8e24aa",
-      dark: "#5c007a",
+      light: "#6effe8",
+      main: "#1de9b6",
+      dark: "#00b686",
       contrastText: "#fff",
     },
     secondary: {
-      light: "#ffc4ff",
-      main: "#ce93d8",
-      dark: "#9c64a6",
+      light: "#52c7b8",
+      main: "#009688",
+      dark: "##00675b",
       contrastText: "#fff",
     },
   },
 });
 
 class App extends Component {
-  componentDidUnmount(){
+  componentDidUnmount() {
     this.props.firebase.doSignOut();
   }
   render() {
