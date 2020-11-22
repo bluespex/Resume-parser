@@ -2,7 +2,7 @@ import os
 import resumeParse
 import utils
 
-upload_path = utils.piyush
+upload_path = utils.prajjwal
 
 
 resumes = []
