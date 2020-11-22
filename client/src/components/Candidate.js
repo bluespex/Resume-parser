@@ -177,46 +177,20 @@ class CandidateDetails extends Component {
     this.uploadFile = imageFile;
     console.log(this.uploadFile);
   };
-  //   onSubmit = (event) => {
-  //     const {
-  //       firstName,
-  //       lastName,
-  //       email,
-  //       password,
-  //       mobile,
-  //       DOB,
-  //       country,
-  //     } = this.state;
-
-  //     this.props.firebase
-  //       .doCreateUserWithEmailAndPassword(email, password)
-  //       .then((authUser) => {
-  //         console.log(authUser.user.uid);
-  //         const newUser = {
-  //           email: this.state.email,
-  //           firstName: this.state.firstName,
-  //           lastName: this.state.lastName,
-  //           mobile: this.state.mobile,
-  //           DOB: this.state.DOB,
-  //           country: this.state.country,
-  //           image:
-  //             "https://firebasestorage.googleapis.com/v0/b/dressify-59ab5.appspot.com/o/no-img.png?alt=media&token=e9f35f49-0354-49f6-bb26-7538a523b3a3",
-  //         };
-  //         return this.props.firebase.db
-  //           .doc(`/users/${authUser.user.uid}`)
-  //           .set(newUser);
-  //       })
-  //       .then(() => {
-  //         this.setState({ ...INITIAL_STATE });
-  //         this.props.history.push("/profile");
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         this.setState({ error });
-  //       });
-
-  //     event.preventDefault();
-  //   };
+    onSubmit = (event) => {
+      const userId = this.props.firebase.auth.currentUser.uid;
+      if(this.state.name===""){
+        return;
+      }
+      this.props.firebase.db.doc(`/users/${userId}`).update({
+        email: this.state.email,
+        mobile: this.state.mobile,
+        name: this.state.name,
+        roll: this.state.roll,
+      });
+      this.props.history.push("/home");
+      event.preventDefault();
+    };
 
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
@@ -272,10 +246,10 @@ class CandidateDetails extends Component {
                   variant="outlined"
                   required
                   fullWidth
-                  id="fullname"
+                  id="name"
                   label="Full Name"
-                  name="fullname"
-                  autoComplete="fullname"
+                  name="name"
+                  autoComplete="name"
                   value={this.state.name}
                   onChange={this.onChange}
                 />

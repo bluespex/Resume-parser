@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Clothes from "../components/Clothes";
+import Company from "../components/Company";
 import Grid from "@material-ui/core/Grid";
 import { withFirebase } from "../components/Firebase";
 
@@ -8,51 +8,54 @@ class home extends Component {
     super(props);
     this.state = {
         ele : [],
-        recommend : null
+        userId:"",
     }
   }
-
   
   componentDidMount() {
-    const userId = this.props.firebase.auth.currentUser.uid;
-
-    this.props.firebase.db
-      .doc(`/users/${userId}`)
-      .get()
-      .then((snapshot) => {
-        const curUser = snapshot.data().recommend;
-        // console.log(snapshot.data());
-        this.setState({recommend : curUser});
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.state.userId = this.props.firebase.auth.currentUser.uid;
+    // this.props.firebase.db
+    //   .doc(`/users/${userId}`)
+    //   .get()
+    //   .then((snapshot) => {
+    //     const curUser = snapshot.data().recommend;
+    //     // console.log(snapshot.data());
+    //     this.setState({recommend : curUser});
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
     
-    
+    console.log("hello");
     this.props.firebase.db
-      .collection("suggestions")
+      .collection("recruiters")
       .get()
       .then((querySnapshot) => {
         var ar = []
         querySnapshot.forEach((doc) => {
-          if(doc.data().celeb === this.state.recommend[0]||doc.data().celeb === this.state.recommend[1]||doc.data().celeb === this.state.recommend[2]){
-            ar.push(doc.data())}
+          console.log(doc.id);  
+          ar.push(doc)
         });
+        console.log(ar);
         this.setState({ele : ar})
+        console.log(this.state);
       });
 
   }
 
   render() {
     return (
-      <div className="homecontainer">
-        <h1><b>Dressify</b></h1>
+      <div>
+        <h1><b>Available jobs</b></h1>
         <Grid container justify="center">
           {this.state.ele.map((val, ind, ar) => {
-            return <Clothes id={ind} img={val} />;
+            return <Company id={ind} company={val} user={this.state.userId}/> ;
           })}
         </Grid>
       </div>
+      // <div>
+      //   <h1>hello</h1>
+      // </div>
     );
   }
 }

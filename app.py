@@ -6,7 +6,7 @@ import resumeParse
 import utils
 from flask_cors import CORS
 import requests
-upload_path = utils.piyush
+upload_path = utils.prajjwal
 
 UPLOAD_FOLDER = upload_path
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
@@ -45,7 +45,7 @@ def upload_file():
         filename1 = "sampleResumes/sample_image."+rex
         userData = resumeParse.fun(os.path.join(
             app.config['UPLOAD_FOLDER'], filename))
-        # os.remove(filename1)
+        os.remove(filename1)
         return userData
 
 
