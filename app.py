@@ -43,8 +43,7 @@ def upload_file():
         file.write(response.content)
         filename = "sample_image."+rex
         filename1 = "sampleResumes/sample_image."+rex
-        userData = resumeParse.fun(os.path.join(
-            app.config['UPLOAD_FOLDER'], filename))
+        userData = resumeParse.fun(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         os.remove(filename1)
         return userData
 
