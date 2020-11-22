@@ -289,6 +289,7 @@ def fun(pp):
     print(cgpa)
 
     details["Name"] = name
+    details["cgpa"] = cgpa
     details["RollNo"] = extract_roll(text_file)
     details["Email"] = extract_email(text_file)
     details["Mobile"] = extract_mobile_number(text_file)

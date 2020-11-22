@@ -10,6 +10,7 @@ import { withStyles } from "@material-ui/core/styles";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import ShareIcon from "@material-ui/icons/Share";
+import { withRouter } from "react-router-dom";
 
 import { withFirebase } from "./Firebase";
 
@@ -47,6 +48,7 @@ const INITIAL_STATE = {
   mobile: "",
   image: "",
   skills: [],
+  cgpa: "",
   error: null,
 };
 
@@ -89,24 +91,35 @@ class CandidateProfile extends Component {
               </Typography>
 
               <Typography gutterBottom>{this.state.mobile}</Typography>
-              {/* <Grid container width="10%">
+              <Typography gutterBottom>cgpa - {this.state.cgpa}</Typography>
+              <a href={this.state.resume}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Resume
+                </Button>
+              </a>
+              {/* <Grid container>
                 {this.state.skills.map((val, ind, arr) => {
                   return (
-                    <Grid width="5%">
+                    <Grid xs={12} sm={3}>
                       <Card>{val}</Card>
                     </Grid>
                   );
                 })}
               </Grid> */}
             </CardContent>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              // onClick={this.onSubmit}
-            >
-              Send Email
-            </Button>
+            <a href={"mailto:" + this.state.email}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Send Email
+              </Button>
+            </a>
           </Card>
         </Grid>
       </div>
@@ -114,4 +127,6 @@ class CandidateProfile extends Component {
   }
 }
 
-export default withFirebase(withStyles(useStyles)(CandidateProfile));
+export default withRouter(
+  withFirebase(withStyles(useStyles)(CandidateProfile))
+);
