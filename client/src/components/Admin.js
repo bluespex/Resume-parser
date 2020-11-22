@@ -145,17 +145,20 @@ class Adminbase extends Component {
 
   onClear = (event) => {
     const userId = this.props.firebase.auth.currentUser.uid;
-    // console.log(this.props.firebase.auth.currentUser.uid);
+    console.log(this.props.firebase.auth.currentUser.uid);
     this.props.firebase.db
       .doc(`/recruiters/${userId}`)
       .get()
       .then((snapshot) => {
         const curUser = snapshot.data();
         this.setState(curUser);
+        console.log(this.state.candidates);
+        this.arr=[];
       })
       .catch((error) => {
         console.log(error);
       });
+      event.preventDefault();
   };
 
   render() {
