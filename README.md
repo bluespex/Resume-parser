@@ -9,10 +9,18 @@ Resume Parser is a Web Application that will act as a bridge between the recruit
 4.  Firebase to maintain database of recruiters and candidates
 
 ## Data Flow 
-<img src="https://github.com/Priybhanu99/Detectify/blob/main/images/data%20flow.png" width="250" height = "400">
+<img src="https://github.com/bluespex/resume-parser/blob/master/images/Data%20flow.png" width="350" height = "400">
+
+## Data Model
+<img src="https://github.com/bluespex/resume-parser/blob/master/images/Data%20model.jpg" width="500" height = "300">
 
 ## The App
-<img src="https://github.com/Priybhanu99/Detectify/blob/main/images/app.jpg" width="500" height = "300">
+### Candidate Side
+<img src="https://github.com/bluespex/resume-parser/blob/master/images/app1.jpg" width="550" height = "350">
+<img src="https://github.com/bluespex/resume-parser/blob/master/images/app2.jpg" width="550" height = "350">
+
+### Recruiter Side
+<img src="https://github.com/bluespex/resume-parser/blob/master/images/Recruiter.jpg" width="550" height = "350">
 
 ##  How to run web app
 First run backend :
