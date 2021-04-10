@@ -23,15 +23,6 @@ CORS(app)
 @app.route('/uploader', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        # f = request.files['file']
-        # if f.filename == '':
-        #     return {
-        #         "error": "submit a document damnit"
-        #     }
-
-        # filename = secure_filename(f.filename)
-        # f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        # return resumeParse.fun(upload_path + '/' + filename)
         f = request.json
         print(f['url'], file=sys.stderr)
         response = requests.get(f['url'])
@@ -46,6 +37,7 @@ def upload_file():
         userData = resumeParse.fun(os.path.join(
             app.config['UPLOAD_FOLDER'], filename))
         os.remove(filename1)
+        print(userData)
         return userData
 
 

@@ -21,6 +21,7 @@ export default class Landing extends Component {
         </Paper>
 
         <h1>About Us</h1>
+        <h2>Palak Meena (2K18/IT/080)</h2>
         <h2>Piyush Shandilya (2K18/IT/082)</h2>
         <h2>Prajjwal Kumar (2K18/IT/085)</h2>
       </div>
